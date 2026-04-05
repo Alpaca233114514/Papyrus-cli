@@ -29,12 +29,12 @@ function ensureConfigDir(): void {
  */
 export function loadConfig(): CLIConfig {
   ensureConfigDir();
-  
+
   if (!existsSync(CONFIG_FILE)) {
     saveConfig(DEFAULT_CONFIG);
     return { ...DEFAULT_CONFIG };
   }
-  
+
   try {
     const data = readFileSync(CONFIG_FILE, "utf-8");
     const config = JSON.parse(data) as CLIConfig;

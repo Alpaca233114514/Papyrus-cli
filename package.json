@@ -1,6 +1,6 @@
 {
   "name": "@alpacali/papyrus-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Papyrus CLI - Command line interface for Papyrus SRS learning system",
   "type": "module",
   "main": "dist/index.js",
@@ -69,6 +69,7 @@
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
     "eslint": "^9.24.0",
+    "globals": "^17.4.0",
     "jest": "^29.7.0",
     "prettier": "^3.5.3",
     "ts-jest": "^29.3.1",

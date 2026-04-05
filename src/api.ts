@@ -36,11 +36,9 @@ function createClient(): AxiosInstance {
  */
 function handleError(error: unknown): never {
   if (error instanceof AxiosError) {
-    const message = error.response?.data?.detail || 
-                   error.response?.data?.message || 
-                   error.message;
+    const message = error.response?.data?.detail || error.response?.data?.message || error.message;
     const status = error.response?.status;
-    
+
     if (status === 404) {
       throw new Error(`Not found: ${message}`);
     } else if (status === 400) {
@@ -49,14 +47,13 @@ function handleError(error: unknown): never {
       throw new Error(`Server error: ${message}`);
     } else if (error.code === "ECONNREFUSED") {
       throw new Error(
-        "Cannot connect to Papyrus API. " +
-        "Make sure the server is running with: papyrus serve"
+        "Cannot connect to Papyrus API. " + "Make sure the server is running with: papyrus serve"
       );
     }
-    
+
     throw new Error(`API error: ${message}`);
   }
-  
+
   throw error;
 }
 
@@ -107,7 +104,7 @@ export async function getCard(id: string): Promise<Card> {
   const client = createClient();
   try {
     const cards = await listCards();
-    const card = cards.find(c => c.id === id);
+    const card = cards.find((c) => c.id === id);
     if (!card) {
       throw new Error(`Card not found: ${id}`);
     }
@@ -175,7 +172,11 @@ export async function importCards(content: string): Promise<number> {
 /**
  * Get next due card (single card review mode)
  */
-export async function getNextDue(): Promise<{ card: Card | null; dueCount: number; totalCount: number }> {
+export async function getNextDue(): Promise<{
+  card: Card | null;
+  dueCount: number;
+  totalCount: number;
+}> {
   const client = createClient();
   try {
     const response = await client.get<{
@@ -201,7 +202,7 @@ export async function getReviewQueue(): Promise<Card[]> {
   // Get all cards and filter for due ones
   const cards = await listCards();
   const now = Date.now() / 1000;
-  return cards.filter(c => c.next_review <= now);
+  return cards.filter((c) => c.next_review <= now);
 }
 
 /**
@@ -210,15 +211,15 @@ export async function getReviewQueue(): Promise<Card[]> {
 export async function getReviewStats(): Promise<ReviewStatsResponse> {
   const cards = await listCards();
   const now = Date.now() / 1000;
-  const dueCards = cards.filter(c => c.next_review <= now);
-  
+  const dueCards = cards.filter((c) => c.next_review <= now);
+
   return {
     success: true,
     stats: {
       total_cards: cards.length,
       due_today: dueCards.length,
-      new_cards: cards.filter(c => c.repetitions === 0).length,
-      review_cards: dueCards.filter(c => c.repetitions > 0).length,
+      new_cards: cards.filter((c) => c.repetitions === 0).length,
+      review_cards: dueCards.filter((c) => c.repetitions > 0).length,
     },
   };
 }
@@ -272,11 +273,11 @@ export async function searchCards(query: string): Promise<SearchResponse> {
     const response = await client.get<SearchAPIResponse>("/api/search", {
       params: { query },
     });
-    
+
     // Map API response to CLI format
     const cardResults = response.data.results
-      .filter(r => r.type === "card")
-      .map(r => ({
+      .filter((r) => r.type === "card")
+      .map((r) => ({
         card: {
           id: r.id,
           q: r.title,
@@ -289,7 +290,7 @@ export async function searchCards(query: string): Promise<SearchResponse> {
         } as Card,
         score: 1.0,
       }));
-    
+
     return {
       success: true,
       results: cardResults,

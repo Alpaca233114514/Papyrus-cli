@@ -18,20 +18,36 @@ export function formatDate(timestamp: number): string {
 export function formatRelativeTime(timestamp: number): string {
   const now = Date.now() / 1000;
   const diff = timestamp - now;
-  
+
   if (diff < 0) {
     const absDiff = Math.abs(diff);
-    if (absDiff < 60) return "just now";
-    if (absDiff < 3600) return `${Math.floor(absDiff / 60)} minutes ago`;
-    if (absDiff < 86400) return `${Math.floor(absDiff / 3600)} hours ago`;
-    if (absDiff < 604800) return `${Math.floor(absDiff / 86400)} days ago`;
+    if (absDiff < 60) {
+      return "just now";
+    }
+    if (absDiff < 3600) {
+      return `${Math.floor(absDiff / 60)} minutes ago`;
+    }
+    if (absDiff < 86400) {
+      return `${Math.floor(absDiff / 3600)} hours ago`;
+    }
+    if (absDiff < 604800) {
+      return `${Math.floor(absDiff / 86400)} days ago`;
+    }
     return formatDate(timestamp);
   }
-  
-  if (diff < 60) return "in a few seconds";
-  if (diff < 3600) return `in ${Math.floor(diff / 60)} minutes`;
-  if (diff < 86400) return `in ${Math.floor(diff / 3600)} hours`;
-  if (diff < 604800) return `in ${Math.floor(diff / 86400)} days`;
+
+  if (diff < 60) {
+    return "in a few seconds";
+  }
+  if (diff < 3600) {
+    return `in ${Math.floor(diff / 60)} minutes`;
+  }
+  if (diff < 86400) {
+    return `in ${Math.floor(diff / 3600)} hours`;
+  }
+  if (diff < 604800) {
+    return `in ${Math.floor(diff / 86400)} days`;
+  }
   return formatDate(timestamp);
 }
 
@@ -39,7 +55,9 @@ export function formatRelativeTime(timestamp: number): string {
  * Truncate text to a maximum length
  */
 export function truncate(text: string, maxLength: number): string {
-  if (text.length <= maxLength) return text;
+  if (text.length <= maxLength) {
+    return text;
+  }
   return text.substring(0, maxLength - 3) + "...";
 }
 
@@ -49,7 +67,9 @@ export function truncate(text: string, maxLength: number): string {
 export function readFileSafe(path: string): string | null {
   try {
     const resolved = resolve(path);
-    if (!existsSync(resolved)) return null;
+    if (!existsSync(resolved)) {
+      return null;
+    }
     return readFileSync(resolved, "utf-8");
   } catch {
     return null;
@@ -62,7 +82,9 @@ export function readFileSafe(path: string): string | null {
 export function isReadableFile(path: string): boolean {
   try {
     const resolved = resolve(path);
-    if (!existsSync(resolved)) return false;
+    if (!existsSync(resolved)) {
+      return false;
+    }
     const stats = statSync(resolved);
     return stats.isFile();
   } catch {
@@ -74,20 +96,28 @@ export function isReadableFile(path: string): boolean {
  * Parse tags from comma-separated string
  */
 export function parseTags(tagsStr: string | undefined): string[] {
-  if (!tagsStr) return [];
+  if (!tagsStr) {
+    return [];
+  }
   return tagsStr
     .split(",")
-    .map(t => t.trim())
-    .filter(t => t.length > 0);
+    .map((t) => t.trim())
+    .filter((t) => t.length > 0);
 }
 
 /**
  * Format file size
  */
 export function formatFileSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  if (bytes < 1024) {
+    return `${bytes} B`;
+  }
+  if (bytes < 1024 * 1024) {
+    return `${(bytes / 1024).toFixed(1)} KB`;
+  }
+  if (bytes < 1024 * 1024 * 1024) {
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  }
   return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB`;
 }
 
@@ -109,7 +139,7 @@ export function escapeRegex(str: string): string {
  * Sleep for a given duration
  */
 export function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -121,9 +151,9 @@ export async function prompt(question: string): Promise<string> {
     input: process.stdin,
     output: process.stdout,
   });
-  
-  return new Promise(resolve => {
-    rl.question(question, answer => {
+
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
       rl.close();
       resolve(answer.trim());
     });

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Papyrus CLI - Main Entry Point
- * 
+ *
  * A command-line interface for the Papyrus SRS learning system.
  */
 
@@ -77,10 +77,7 @@ const program = new Command()
 
 // ==================== Card Commands ====================
 
-const cardCmd = program
-  .command("card")
-  .alias("cards")
-  .description("Manage flashcards");
+const cardCmd = program.command("card").alias("cards").description("Manage flashcards");
 
 cardCmd
   .command("list")
@@ -236,9 +233,7 @@ program
 
 // ==================== Data Commands ====================
 
-const dataCmd = program
-  .command("data")
-  .description("Manage data and backups");
+const dataCmd = program.command("data").description("Manage data and backups");
 
 dataCmd
   .command("backup")
@@ -407,7 +402,7 @@ program
           console.error(chalk.red("Usage: --set key=value"));
           process.exit(1);
         }
-        setConfig(key as any, value);
+        setConfig(key, value);
         console.log(chalk.green(`Set ${key} = ${value}`));
       } else {
         displayConfig();
@@ -428,7 +423,7 @@ program
     console.log("1. Start the server:");
     console.log(chalk.cyan("   papyrus serve\n"));
     console.log("2. Add some cards:");
-    console.log(chalk.cyan("   papyrus card add \"Question?\" \"Answer!\"\n"));
+    console.log(chalk.cyan('   papyrus card add "Question?" "Answer!"\n'));
     console.log("3. Start reviewing:");
     console.log(chalk.cyan("   papyrus review\n"));
     console.log("4. Check stats:");

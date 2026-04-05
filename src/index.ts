@@ -1,6 +1,6 @@
 /**
  * Papyrus CLI - Library Exports
- * 
+ *
  * This file exports the API client and types for programmatic use.
  */
 
