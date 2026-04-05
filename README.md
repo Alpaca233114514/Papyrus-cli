@@ -2,6 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/@alpacali/papyrus-cli)](https://www.npmjs.com/package/@alpacali/papyrus-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)](https://www.typescriptlang.org/)
 
 A powerful command-line interface for [Papyrus](https://github.com/Papyrus/Papyrus) - the SRS (Spaced Repetition System) learning application.
 
@@ -121,13 +123,13 @@ papyrus serve
 papyrus serve --port 8080 --detach
 
 # Check server status
-papyrus serve status
+papyrus status
 
 # Stop server
-papyrus serve stop
+papyrus stop
 
 # Open API docs
-papyrus serve docs
+papyrus docs
 ```
 
 ### Configuration
@@ -170,6 +172,26 @@ Configuration is stored in `~/.papyrus/config.json`:
 }
 ```
 
+## 🛠️ Development
+
+```bash
+# Clone repository
+git clone https://github.com/Papyrus/Papyrus-cli.git
+cd Papyrus-cli
+
+# Install dependencies
+npm install
+
+# Run in development mode
+npm run dev
+
+# Run quality checks
+npm run quality
+
+# Build
+npm run build
+```
+
 ## 🔧 Requirements
 
 - Node.js 18+
@@ -177,7 +199,7 @@ Configuration is stored in `~/.papyrus/config.json`:
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## 📄 License
 
