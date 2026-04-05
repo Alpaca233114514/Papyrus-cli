@@ -32,7 +32,7 @@ import { quickReviewCommand, reviewCommand, reviewStatsCommand } from "./command
 import { docsCommand, serveCommand, statusCommand, stopCommand } from "./commands/serve.js";
 
 // Version - will be replaced by build process
-const version = "1.0.0";
+const version = "1.0.2";
 
 // ASCII Art Banner
 const ASCII_BANNER = `
