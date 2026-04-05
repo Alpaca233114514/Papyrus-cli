@@ -26,10 +26,9 @@ function displayAnswer(card: Card): void {
   console.log(`\nA: ${card.a}\n`);
   console.log("═".repeat(60));
   console.log("\nRate your recall:");
-  console.log("  [1] Again - Complete blackout");
-  console.log("  [2] Hard - Incorrect response, remembered");
-  console.log("  [3] Good - Correct with difficulty");
-  console.log("  [4] Easy - Perfect response");
+  console.log("  [1] 忘记 - Complete blackout");
+  console.log("  [2] 模糊 - Incorrect response, remembered");
+  console.log("  [3] 秒杀 - Perfect response");
   console.log("  [q] Quit review session\n");
 }
 
@@ -71,24 +70,20 @@ export async function reviewCommand(): Promise<void> {
         return;
       }
       
-      const rating = parseInt(input, 10);
+      const grade = parseInt(input, 10);
       
-      if (rating >= 1 && rating <= 4) {
-        // Map 1-4 to SM-2 quality ratings (0-5)
-        const quality = rating === 1 ? 0 : rating === 2 ? 3 : rating === 3 ? 4 : 5;
-        
+      // Papyrus uses grades 1-3: 1=忘记, 2=模糊, 3=秒杀
+      if (grade >= 1 && grade <= 3) {
         try {
-          await submitReview(card.id, quality);
+          await submitReview(card.id, grade);
           completed++;
           validInput = true;
           
           // Show feedback
-          const feedback = rating === 1 
+          const feedback = grade === 1 
             ? "😔 Don't worry, you'll get it next time!" 
-            : rating === 2 
+            : grade === 2 
             ? "😐 Keep practicing!" 
-            : rating === 3 
-            ? "🙂 Good job!" 
             : "🌟 Excellent!";
           
           console.log(`\n   ${feedback}`);
@@ -98,7 +93,7 @@ export async function reviewCommand(): Promise<void> {
           console.error(`\n   Error submitting review: ${error}`);
         }
       } else {
-        console.log("   Please enter 1-4 or q to quit.");
+        console.log("   Please enter 1-3 or q to quit.");
       }
     }
   }

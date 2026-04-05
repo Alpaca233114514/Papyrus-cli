@@ -173,38 +173,63 @@ export async function importCards(content: string): Promise<number> {
 // ==================== Review APIs ====================
 
 /**
- * Get review queue
+ * Get next due card (single card review mode)
  */
-export async function getReviewQueue(): Promise<Card[]> {
+export async function getNextDue(): Promise<{ card: Card | null; dueCount: number; totalCount: number }> {
   const client = createClient();
   try {
-    const response = await client.get<{ cards: Card[] }>("/api/review/queue");
-    return response.data.cards;
+    const response = await client.get<{
+      success: boolean;
+      card: Card | null;
+      due_count: number;
+      total_count: number;
+    }>("/api/review/next");
+    return {
+      card: response.data.card,
+      dueCount: response.data.due_count,
+      totalCount: response.data.total_count,
+    };
   } catch (error) {
     return handleError(error);
   }
+}
+
+/**
+ * Get review queue (all due cards)
+ */
+export async function getReviewQueue(): Promise<Card[]> {
+  // Get all cards and filter for due ones
+  const cards = await listCards();
+  const now = Date.now() / 1000;
+  return cards.filter(c => c.next_review <= now);
 }
 
 /**
  * Get review stats
  */
 export async function getReviewStats(): Promise<ReviewStatsResponse> {
-  const client = createClient();
-  try {
-    const response = await client.get<ReviewStatsResponse>("/api/review/stats");
-    return response.data;
-  } catch (error) {
-    return handleError(error);
-  }
+  const cards = await listCards();
+  const now = Date.now() / 1000;
+  const dueCards = cards.filter(c => c.next_review <= now);
+  
+  return {
+    success: true,
+    stats: {
+      total_cards: cards.length,
+      due_today: dueCards.length,
+      new_cards: cards.filter(c => c.repetitions === 0).length,
+      review_cards: dueCards.filter(c => c.repetitions > 0).length,
+    },
+  };
 }
 
 /**
  * Submit review
  */
-export async function submitReview(cardId: string, quality: number): Promise<void> {
+export async function submitReview(cardId: string, grade: number): Promise<void> {
   const client = createClient();
   try {
-    await client.post<ReviewSubmitResponse>(`/api/review/${cardId}`, { quality });
+    await client.post(`/api/review/${cardId}/rate`, { grade });
   } catch (error) {
     return handleError(error);
   }
@@ -213,15 +238,63 @@ export async function submitReview(cardId: string, quality: number): Promise<voi
 // ==================== Search APIs ====================
 
 /**
+ * Search result item from API
+ */
+interface SearchResultItem {
+  id: string;
+  type: "note" | "card";
+  title: string;
+  preview: string;
+  folder: string;
+  tags: string[];
+  matched_field: string;
+  updated_at?: number;
+}
+
+/**
+ * Search API response
+ */
+interface SearchAPIResponse {
+  success: boolean;
+  query: string;
+  results: SearchResultItem[];
+  total: number;
+  notes_count: number;
+  cards_count: number;
+}
+
+/**
  * Search cards
  */
 export async function searchCards(query: string): Promise<SearchResponse> {
   const client = createClient();
   try {
-    const response = await client.get<SearchResponse>("/api/search", {
-      params: { q: query },
+    const response = await client.get<SearchAPIResponse>("/api/search", {
+      params: { query },
     });
-    return response.data;
+    
+    // Map API response to CLI format
+    const cardResults = response.data.results
+      .filter(r => r.type === "card")
+      .map(r => ({
+        card: {
+          id: r.id,
+          q: r.title,
+          a: r.preview,
+          next_review: 0,
+          interval: 0,
+          ef: 2.5,
+          repetitions: 0,
+          tags: r.tags,
+        } as Card,
+        score: 1.0,
+      }));
+    
+    return {
+      success: true,
+      results: cardResults,
+      count: cardResults.length,
+    };
   } catch (error) {
     return handleError(error);
   }

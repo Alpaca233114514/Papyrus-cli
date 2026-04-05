@@ -29,9 +29,9 @@ function displayCard(card: Card, detailed = false): void {
   
   if (detailed) {
     console.log(`  Next Review: ${formatRelativeTime(card.next_review)}`);
-    console.log(`  Interval: ${Math.round(card.interval / 86400)} days`);
-    console.log(`  EF: ${card.ef.toFixed(2)}`);
-    console.log(`  Repetitions: ${card.repetitions}`);
+    console.log(`  Interval: ${Math.round((card.interval || 0) / 86400)} days`);
+    console.log(`  EF: ${(card.ef || 2.5).toFixed(2)}`);
+    console.log(`  Repetitions: ${card.repetitions || 0}`);
   }
 }
 
