@@ -1,4 +1,33 @@
-# 📜 Papyrus CLI
+```
+╔═══════════════════════════════════════════════════════════════╗
+║                          PAPYRUS CLI                          ║
+╠═══════════════════════════════════════════════════════════════╣
+║                                                               ║
+║ █████████████████████████████████████████████████████████████ ║
+║ █                    •                                      █ ║
+║ █               •          •∙                       ·       █ ║
+║ █  ▓▓▓▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓▓▓▓ ▓▓   ▓▓ ▓▓▓▓▓▓▓ ▓▓   ▓▓  ▓▓▓▓▓▓  █ ║
+║ █  ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓       █ ║
+║ █  ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓   ▓▓ ▓▓       █ ║
+║ █  ▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓∙ ▓▓▓▓▓  ▓▓▓▓▓▓▓ ▓▓   ▓▓  ▓▓▓▓▓   █ ║
+║ █  ▓▓      ▓▓   ▓▓ ▓▓         ▓▓   ▓▓ ▓▓  ∙▓▓·  ▓▓      ▓▓  █ ║
+║ █ ·▓▓   ·  ▓▓   ▓▓ ▓▓         ▓▓ • ▓▓  ▓▓∙ ▓▓∙  ▓▓      ▓▓  █ ║
+║ █  ▓▓ ·    ▓▓   ▓▓ ▓▓         ▓▓   ▓▓   ▓▓  ▓▓▓▓▓  ▓▓▓▓▓▓   █ ║
+║ █                      ·       ∙                            █ ║
+║ █       ·                                   ·               █ ║
+║ █       •    •     ▓▓▓▓▓▓  ▓▓       ▓▓▓▓▓▓▓                 █ ║
+║ █•              · ▓▓       ▓▓        ·▓▓▓           ·•      █ ║
+║ █  ∙              ▓▓       ▓▓         ▓▓▓    ••         •   █ ║
+║ █       ·         ▓▓       ▓▓         ▓▓▓         ∙         █ ║
+║ █  ·              ▓▓       ▓▓ ·  ·    ▓▓▓               ·   █ ║
+║ █              ∙  ▓▓•      ▓▓         ▓▓▓                   █ ║
+║ █               •  ▓▓▓▓▓▓  ▓▓▓▓▓▓▓ ·▓▓▓▓▓▓▓          ∙ •  · █ ║
+║ █             •              •          ·•·           ·     █ ║
+║ █       ·                     •             •          ∙    █ ║
+║ █████████████████████████████████████████████████████████████ ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+```
 
 [![npm version](https://img.shields.io/npm/v/@alpacali/papyrus-cli)](https://www.npmjs.com/package/@alpacali/papyrus-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -6,6 +35,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)](https://www.typescriptlang.org/)
 
 A powerful command-line interface for [Papyrus](https://github.com/Papyrus/Papyrus) - the SRS (Spaced Repetition System) learning application.
+
+Running `papyrus` without any arguments will display the ASCII art banner above.
 
 ## ✨ Features
 
